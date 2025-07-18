@@ -5,7 +5,7 @@ import { CounterContext  } from '../Context/Context';
 import RecentProducts from '../RecentProducts/RecentProducts';
 import Catgeories from '../Catgeories/Catgeories';
 import MainSlider from '../MainSlider/MainSlider';
-import {Helmet} from "react-helmet";
+ import { Helmet } from 'react-helmet';
  
   export default function Home() {
     const  {counter ,setcounter,user}=useContext(CounterContext)
@@ -22,7 +22,7 @@ import {Helmet} from "react-helmet";
       </Helmet>
 
  <MainSlider/>
- <Catgeories/>
+ 
    <RecentProducts/>
    </>)
  }

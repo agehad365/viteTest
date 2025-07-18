@@ -3,10 +3,11 @@ import {   NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.jpg';
 import { UserContext } from '../Context/UserContext';
 import { CounterContext } from '../Context/Context';
+import { Link } from 'react-router-dom';
 import { CartContext } from '../Context/CartContext';
 
 export default function Navbar() {
-  let navigate=useNavigate()
+   let navigate=useNavigate()
  let {userlogin,setuserlogin}= useContext(UserContext)
  let {counter}=useContext(CounterContext)
  let {numofCartItems}=useContext(CartContext )
@@ -25,10 +26,13 @@ function logout(){
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
         
         {/* Logo and Main Links */}
-        <div className="flex flex-col md:flex-row items-center">
-          <img width={80} src={logo} alt="Bakery Logo" className="mb-2 md:mb-0" />
+        <div className="flex flex-col md:flex-row items-center gap-2.5 ">
+        <Link  to="/cart"><i className="text-green-500 text-2xl  fa-solid fa-cart-shopping nav-icon" ></i>  </Link>
+     
+        <span className='h3 bold  text-2xl'>fresh cart</span>
+    
           
-          <ul className="flex flex-col md:flex-row items-center md:ml-4">
+          <ul className="flex flex-col md:flex-row items-center  md:ml-4">
             
 <li className="text-xl text-slate-800 font-bold mx-2 py-2 relative group">
   <NavLink
@@ -63,22 +67,7 @@ function logout(){
       }`
     }
   >
-    Contact
-    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-  </NavLink>
-</li>
-
-
- <li className="text-xl text-slate-800 mx-2 py-2 relative group">
-  <NavLink
-    to="/about"
-    className={({ isActive }) =>
-      `relative font-bold ${
-        isActive ?'text-blue-600' : "text-slate-800 group-hover:text-blue-600"
-      }`
-    }
-  >
-    About
+    Wish list
     <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
   </NavLink>
 </li>
@@ -142,6 +131,10 @@ function logout(){
 
    </NavLink>
 </li>
+
+
+
+
           </ul>
         </div>
 
@@ -158,6 +151,7 @@ function logout(){
         Register
       </NavLink>
              </li>
+
              <li className="py-2 mx-3  text-slate-700 font-bold text-2xl hover:text-emerald-600">
       <NavLink to="/login" 
      className={({isActive})=>
@@ -165,6 +159,7 @@ function logout(){
         Login
       </NavLink>
             </li>
+            
                <li onClick={logout} className="py-2 mx-3 font-bold text-2xl text-slate-700 hover:text-emerald-600">
       <NavLink to="/logout" className={({isActive})=>
       isActive?"text-emerald-600":undefined}

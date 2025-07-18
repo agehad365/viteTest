@@ -40,11 +40,30 @@ console.log(data?.data?.data);
                  Brand page
                </title>
              </Helmet>
-    <div className="flex flex-wrap">
-   {data?.data?.data.map((brand)=>{ return <img key={brand._id} src={(brand.image)} alt="" />
-   })}
 
+<div className="container  mx-auto px-4">
+   
+    <h1 className="text-3xl font-bold text-green-600  text-center m-15  fw-bold">All Brands</h1>
+
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
+   
+  {data?.data?.data.map((brand) => (
+    <div
+      key={brand._id}
+      className="bg-white border rounded-md p-4 transition-all duration-500 transform hover:scale-105 hover:shadow-[0_0_20px_4px_rgba(34,197,94,0.5)]"
+    >
+      <img
+        src={brand.image}
+        alt={brand.name}
+        className="w-full h-40 object-contain mx-auto"
+      />
+      <h3 className="text-center mt-2 text-lg font-semibold">{brand.name}</h3>
     </div>
+  ))}
+</div>
+</div>
+
    </>
     )
  }

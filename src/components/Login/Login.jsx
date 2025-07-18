@@ -4,7 +4,7 @@
    import * as Yup from 'yup';
    import axios from 'axios';
  import { UserContext } from '../Context/UserContext';
-import {Helmet} from "react-helmet";
+ 
      
  
 
@@ -67,11 +67,7 @@ export default function Login() {
 
   return (
     <>
-     <Helmet>
-            <title>
-              Login page
-            </title>
-          </Helmet>
+     
     
 <div className=" bg-gray-100 flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
   <div className="w-full max-w-md space-y-8">

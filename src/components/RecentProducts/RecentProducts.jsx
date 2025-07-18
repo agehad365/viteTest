@@ -10,7 +10,7 @@ import {Helmet} from "react-helmet";
  export default function RecentProducts() {
 const[allproducts,setallproducts]=useState(null)
  
-allproducts
+ 
 let{addCart}=useContext(CartContext)
 
  async function AddProducttoCart(prodId){
@@ -18,8 +18,8 @@ let{addCart}=useContext(CartContext)
     console.log(response);
     if(response.data.status==='success'){
 toast.success(response?.data?.message,{
-  duraton:300,
-position:'top-right'
+  duration:300,
+  position:'top-right'
 })
 
     }else{
@@ -47,33 +47,42 @@ position:'top-right'
 <>
  <Helmet>
         <title>
-          RecentProducts page
+          Home page
         </title>
       </Helmet>
 
 {allproducts?.length > 0 ? 
- <div className='flex gap-y-3 flex-wrap '>
-   {allproducts?.map((prod)=>{
-    return    <div key={prod.id   } className="w-full md:w-1/3 lg:w-1/4 xl:w-1/6 m-5 ">
-      <div className="product p-5 ">
-    <Link to={`/productdetails/${prod.id}/${prod.category.name}`}>
-  
-      <img src={prod.imageCover} className='w-full' alt="Product description" />
-        <span className='text-green-600'>{prod.category.name}</span>
-        <h3 className='text-xl font-medium'>{prod.title.split(' ').slice(0,2).join(' ')}</h3>
+ <div className='flex gap-y-3 flex-wrap'>
+  {allproducts?.map((prod) => {
+    return (
+      <div key={prod.id} className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5 m-5 group relative transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02]">
+        <div className="p-5 bg-white rounded-md overflow-hidden transition-all duration-500 hover:shadow-[0_0_20px_5px_rgba(34,197,94,0.7)]">
+          <Link to={`/productdetails/${prod.id}/${prod.category.name}`}>
+            <img src={prod.imageCover} className='w-full h-40 object-cover mb-2' alt="Product description" />
+            <span className='text-green-600 block mb-1'>{prod.category.name}</span>
+            <h3 className='text-md font-medium'>{prod.title.split(' ').slice(0, 2).join(' ')}</h3>
+            <div className="flex justify-between text-sm mt-1">
+              <span>{prod.price} EGP</span>
+              <span><i className='fas fa-star text-yellow-400'></i> {prod.ratingAverage}</span>
+            </div>
+          </Link>
+        </div>
 
-      <div className="flex justify-between">
-        <span>{prod.price} Egp</span>
-        <span><i className='fas fa-start text-yellow-400'></i>{prod.ratingAverage}</span>
+        {/* الزرار يطلع من تحت */}
+        <button
+          onClick={() => AddProducttoCart(prod._id)}
+          className="absolute left-0 right-0 bottom-[-50px] opacity-0 group-hover:bottom-[-10px] group-hover:opacity-100 bg-green-600 text-white py-2 mx-5 rounded-md transition-all duration-500"
+        >
+          Add to Cart
+        </button>
       </div>
+    );
+  })}
+</div>
 
-    </Link>
-      </div>
-            <button onClick={ ()=>{AddProducttoCart(prod._id)}} className='cursor-pointer w-full bg-green-600 py-2 rounded-md my-2'>Add to Cart</button>
-    </div>
-   })}
-   
-  </div>:<Spinner/>}
+
+
+  :<Spinner/>}
  
 </>
    )

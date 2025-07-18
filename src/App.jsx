@@ -2,12 +2,8 @@
   import './App.css';
   import Layout from './components/Layout/Layout';
   import Categories from './components/Catgeories/Catgeories';
-  import Register from './components/Register/Register';
-  import Login from './components/Login/Login';
-  import Cart from './components/Cart/Cart';
   import NotFound from './components/NotFound/NotFound';
   import Home from './components/Home/Home';
-  import Brands from './components/Brands/Brands';
   import { CounterContext } from '../src/components/Context/Context';
   import { UserContextProvider } from '../src/components/Context/UserContext';
   import { useQuery,QueryClient,QueryClientProvider} from '@tanstack/react-query'
@@ -23,10 +19,18 @@ import Products from './components/Products/Products';
  import { store } from '../lib/store';
 import   { Toaster } from 'react-hot-toast';
  import { Provider } from 'react-redux'
- 
+ import { Offline, Online } from "react-detect-offline";
+import { lazy } from 'react';
  
 
- const queryClient = new QueryClient()
+
+// import Cart from './components/Cart/Cart';
+
+const Cart = lazy(() => import('./components/Cart/Cart'));
+const Register = lazy(() => import('./components/Register/Register'));
+const Login = lazy(() => import('./components/Login/Login'));
+const Brands = lazy(() => import('./components/Brands/Brands'));
+  const queryClient = new QueryClient()
 
   const router = createBrowserRouter([
     {
@@ -39,14 +43,20 @@ import   { Toaster } from 'react-hot-toast';
         {path:"categories", element: <ProtectRouter><Categories/></ProtectRouter> },
         { path: 'brands', element: <ProtectRouter><Brands/></ProtectRouter>  },
         { path: 'products', element: <ProtectRouter><Products/></ProtectRouter>  },
-        { path: 'productdetail/:id/:category', element: <ProtectRouter><Productdatil/></ProtectRouter>  },
+        { path: 'ProductDetails/:id/:category', element: <ProtectRouter><Productdatil/></ProtectRouter>  },
         { path: 'cart', element:<ProtectRouter><Cart/></ProtectRouter> },
         { path: 'register', element: <Register /> },
         { path: 'login', element: <Login /> },
         { path: '*', element: <NotFound /> },
       ],
     },
-  ]);
+
+  ],
+  {
+
+    basename: "/viteTest",
+  }
+);
 
   function App() {
     return (
@@ -58,9 +68,14 @@ import   { Toaster } from 'react-hot-toast';
      <CartContextProvider>
                   <CounterContextProvider>
                       <RouterProvider router={router} />
-
                       <Toaster/>
                       <ReactQueryDevtools/>
+                      <Online>
+              <h2 className='bg-green-400 py-3 rounded-md absolute bottom-0 started-2'>Connected </h2>
+                      </Online>
+                                   <Offline>
+              <h2 className='bg-red-400 py-3 rounded-md absolute bottom-0 started-2'>NetWork issue </h2>
+                      </Offline>
                  </CounterContextProvider>
      </CartContextProvider>
              </UserContextProvider>

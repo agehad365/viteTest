@@ -4,11 +4,11 @@ import axios from 'axios'
  export let CartContext=createContext(null)
 
  export function CartContextProvider(props){
-const [cardId,setCardId]=useState(null)
+const [cardId,setCardId]=useState([])
 const [totalprice,SettotalPrice]=useState(0)
-const [products,setProducts]=useState(null)
+const [products,setProducts]=useState([])
 const [numofCartItems,setnumofCartItems]=useState(0)
-setnumofCartItems
+ 
 let token= localStorage.getItem('usertoken') 
 let headers={token:localStorage.getItem('usertoken')}
 
@@ -26,7 +26,6 @@ function resetCart(){
     })
     .then((response)=>{
       getUseCartItem( )
-    
 
   return response
     }).catch((error)=>{
@@ -39,10 +38,10 @@ function resetCart(){
     headers
    }).then((response)=>{
      setCardId(response?.data?.data?._id);
-     SettotalPrice(response?.data.data?.totalCartPric)
+     SettotalPrice(response?.data.data?.totalCartPrice)
      setnumofCartItems(response?.data?.numOfCartItems);
-     setProducts(response?.data.data?.Products);
-console.log("response.data.data:", response?.data?.data);
+     setProducts(response?.data.data?.products);
+    console.log("response.data.data:", response?.data?.data );
     
    }).catch((error)=>{
     console.log(error);
@@ -57,8 +56,8 @@ function UpdateCart(prodId ,count){
     headers}).then((response)=>{
        setCardId(response?.data?.data?._id);
        SettotalPrice(response?.data?.data?.totalCartPric)
-       setnumofCartItems(response?.data?.numOfCartItems);
        setProducts(response?.data?.data?.Products);
+       setnumofCartItems(response?.data?.numOfCartItems);
     
 return response
 
@@ -89,7 +88,7 @@ function deleteCartItem(prodId ){
 
   useEffect(() => {
     if(token){
- getUseCartItem()
+        getUseCartItem()
     }
   }, [token])
   

@@ -6,6 +6,7 @@ import { getAllproduct } from '../../../lib/productSlice';
 import {Helmet} from "react-helmet";
 
    export default function Products( ) {
+  
 let dispatch=useDispatch()
    let {counter,userName}=useSelector((state)=>{return state.counterReducer})
  let {allProducts , isLoading,isError}= useSelector((state)=>{ return state.productReducer})
@@ -28,14 +29,32 @@ let dispatch=useDispatch()
           Cart page
         </title>
       </Helmet>
-<div  className="grid md:grid-cols-4 lg:grid-cols-6 gap-5 ">
-  {allProducts?.map((prod)=>{
-    return <div   key={prod._id}>
-    <img src={prod.imageCover} className='w-full' alt={prod.title} />
-    <h2>{prod.title}</h2>
-  </div>})}
-</div> 
+ <div className="container mx-auto px-4">
+  <div className="flex flex-wrap justify-between gap-y-8">
+    {allProducts?.map((prod) => (
+      <div
+        key={prod._id}
+        className="w-full sm:w-1/2 md:w-1/4 p-2 group relative transition-all duration-500 transform hover:scale-105 hover:-translate-y-1"
+      >
+        <div className="bg-white rounded-md p-4 shadow-sm hover:shadow-[0_0_20px_4px_rgba(34,197,94,0.5)] transition-all duration-500 h-full">
+          <img
+            src={prod.imageCover}
+            alt={prod.title}
+            className="w-full h-40 object-cover rounded mb-3"
+          />
+          <h2 className="text-md font-semibold text-center">{prod.title}</h2>
+        </div>
 
+         <button
+          onClick={() => AddProducttoCart(prod._id)}
+          className="absolute left-0 right-0 bottom-[-50px] opacity-0 group-hover:bottom-[-10px] group-hover:opacity-100 bg-green-600 text-white py-2 mx-5 rounded-md transition-all duration-500"
+        >
+          Add to Cart
+        </button>
+      </div>
+    ))}
+  </div>
+</div>
 
  </>
 
